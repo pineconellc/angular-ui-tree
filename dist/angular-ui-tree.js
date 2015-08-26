@@ -386,8 +386,8 @@
               scope.$emptyElm.addClass(config.emptyTreeClass);
             }
 
-            scope.$watch('$nodesScope.$modelValue.length', function () {
-              if (!scope.$nodesScope.$modelValue) {
+            scope.$watch('$nodesScope.$modelValue.length', function (val) {
+              if (!angular.isNumber(val)) {
                 return;
               }
 
@@ -808,7 +808,7 @@
                   // Remove the placeholder
                   placeElm.remove();
 
-                  // If the target was an empty tree, replace the emply element placeholder
+                  // If the target was an empty tree, replace the empty element placeholder
                   if (treeScope) {
                     treeScope.resetEmptyElement();
                     treeScope = null;
@@ -1058,9 +1058,6 @@
 
             if (ngModel) {
               ngModel.$render = function () {
-                if (!ngModel.$modelValue || !angular.isArray(ngModel.$modelValue)) {
-                  scope.$modelValue = [];
-                }
                 scope.$modelValue = ngModel.$modelValue;
               };
             }
